@@ -1,16 +1,22 @@
-chrome.extension.sendMessage({ action: "get_favicon" }, function(response) {
-  var readyStateCheckInterval = setInterval(function() {
-    if (document.readyState === "complete") {
-      clearInterval(readyStateCheckInterval);
+chrome.extension.sendMessage({ action: "get_data" }, function(response) {
+    var readyStateCheckInterval = setInterval(function() {
+	if (document.readyState === "complete") {
+	    clearInterval(readyStateCheckInterval);
 
-      if (response.info) {
-	var favicon=new Favico({
-	  animation:'none',
-	  bgColor: response.info
-	});
-      }
+	    if (response.info) {
+		var settings = {
+		    animation: 'none',
+		    bgColor: response.info.color
+		};
 
-      favicon.badge(' ');
-    }
-  }, 10);
+		if (response.info.position) {
+		    settings.position = response.info.position;
+		}
+
+		var favicon = new Favico(settings);
+	    }
+
+	    favicon.badge(' ');
+	}
+    }, 10);
 });

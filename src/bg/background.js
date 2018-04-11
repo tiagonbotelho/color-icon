@@ -9,19 +9,7 @@ function tabKey(tab) {
     return tab.id.toString();
 }
 
-function setColor(color, sendResponse) {
-    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-	var obj = {};
-	var key = tabKey(tabs[0]);
-
-	obj[key] = colorToHex(color);
-	chrome.storage.local.set(obj);
-
-	sendResponse({ info: "Value was set." });
-    });
-}
-
-function getFaviconInfo(tab, sendResponse) {
+function getData(tab, sendResponse) {
     var key = tabKey(tab);
 
     chrome.storage.local.get(key, function(data) {
@@ -29,13 +17,39 @@ function getFaviconInfo(tab, sendResponse) {
     });
 }
 
+function setData(request, sendResponse) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+	var key = tabKey(tabs[0]);
+
+	chrome.storage.local.get(key, function(data) {
+	    console.log(data);
+	    var obj = data || {};
+	    obj[key] = obj[key] || {};
+
+	    if (request.color) {
+		obj[key].color = colorToHex(request.color);
+	    }
+
+	    if (request.position) {
+		obj[key].position = request.position;
+	    }
+
+	    chrome.storage.local.set(obj);
+	});
+
+	sendResponse({ info: "Values were set." });
+    });
+}
+
+/* Events */
+
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     switch(request.action) {
-    case "get_favicon":
-	getFaviconInfo(sender.tab, sendResponse);
+    case "get_data":
+	getData(sender.tab, sendResponse);
 	return true;
     case "set":
-	setColor(request.color, sendResponse);
+	setData(request, sendResponse);
 	return true;
     default:
 	return false;
