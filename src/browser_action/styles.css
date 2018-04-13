@@ -1,0 +1,83 @@
+h1 {
+    font-size: 2em;
+}
+
+.color {
+    float: left;
+    margin: 0 5px;
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    border: none;
+}
+
+.color > input {
+    margin-top: 15px;
+    margin-left: 15px;
+}
+
+.position-radio {
+    position: absolute;
+}
+
+.left {
+    margin-left: -5px;
+}
+
+.right {
+    margin-left: 40px;
+}
+
+.top {
+    margin-top: -5px;
+}
+
+.bottom {
+    margin-top: 40px;
+}
+
+#mainPopup {
+    text-align: center;
+    padding: 10px;
+    height: 200px;
+    width: 400px;
+    font-family: Helvetica, Ubuntu, Arial, sans-serif;
+}
+
+#colors {
+    width: 77%;
+    height: 25px;
+    margin: 25px auto;
+}
+
+#positions {
+    text-align: center;
+}
+
+#red {
+    background-color: #FB635E;
+}
+
+#green {
+    background-color: #86E26D;
+}
+
+#blue {
+    background-color: #53BDF6;
+}
+
+#yellow {
+    background-color: #FDD74F;
+}
+
+#orange {
+    background-color: #FCAB47;
+}
+
+#purple {
+    background-color: #D58FE3;
+}
+
+#gray {
+    background-color: #A5A5A7;
+}

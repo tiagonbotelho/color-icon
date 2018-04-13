@@ -12,11 +12,11 @@
   "default_locale": "en",
   "background": {
     "scripts": [
+      "src/bg/helpers.js",
       "src/bg/background.js"
     ],
     "persistent": false
   },
-  "options_page": "src/options/index.html",
   "browser_action": {
     "default_icon": "icons/icon19.png",
     "default_title": "browser action demo",

@@ -1,21 +1,17 @@
-var colors = document.querySelectorAll(".color");
-var positions = document.querySelectorAll(".position");
+document.getElementById("faviform").addEventListener("submit", function(event) {
+    event.preventDefault();
 
-colors.forEach(function(color) {
-    color.addEventListener("click", function(event) {
-	handleAction("color", event.target);
-    });
-});
-
-positions.forEach(function(position) {
-    position.addEventListener("click", function(event) {
-	handleAction("position", event.target);
-    });
-});
-
-function handleAction(key, el) {
+    var position = document.querySelector('input[name="position"]:checked');
+    var color = document.querySelector('input[name="color"]:checked');
     var request = { action: "set" };
-    request[key] = el.id;
+
+    if (position) {
+	request["position"] = position.value;
+    }
+
+    if (color) {
+	request["color"] = color.value;
+    }
 
     chrome.extension.sendMessage(request, function(response) {
 	chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
@@ -24,4 +20,4 @@ function handleAction(key, el) {
 	    chrome.tabs.reload(tab.id);
 	});
     });
-}
+});

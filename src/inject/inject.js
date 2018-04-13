@@ -14,9 +14,8 @@ chrome.extension.sendMessage({ action: "get_data" }, function(response) {
 		}
 
 		var favicon = new Favico(settings);
+	        favicon.badge(' ');
 	    }
-
-	    favicon.badge(' ');
 	}
     }, 10);
 });

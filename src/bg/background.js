@@ -1,14 +1,3 @@
-function colorToHex(color) {
-    switch(color) {
-    case "red": return "#ffb3ba";
-    case "green": return "#baffc9";
-    }
-}
-
-function tabKey(tab) {
-    return tab.id.toString();
-}
-
 function getData(tab, sendResponse) {
     var key = tabKey(tab);
 
@@ -22,7 +11,6 @@ function setData(request, sendResponse) {
 	var key = tabKey(tabs[0]);
 
 	chrome.storage.local.get(key, function(data) {
-	    console.log(data);
 	    var obj = data || {};
 	    obj[key] = obj[key] || {};
 
@@ -58,8 +46,8 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 );
 
 chrome.tabs.onUpdated.addListener(function(id, change, tab) {
-    var key = tabKey(tab);
-
+    // If the url of the current tab changed
+    //we need to invalidate our storage
     if (change.url) {
 	chrome.storage.local.remove(tabKey(tab));
     }

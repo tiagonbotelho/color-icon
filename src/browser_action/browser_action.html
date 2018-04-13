@@ -1,23 +1,46 @@
 <!doctype html>
-<style type="text/css">
-	#mainPopup {
-		padding: 10px;
-		height: 200px;
-		width: 400px;
-		font-family: Helvetica, Ubuntu, Arial, sans-serif;
-	}
-	h1 {
-		font-size: 2em;
-	}
-</style>
+<link rel="stylesheet" type="text/css" href="styles.css">
 
 <div id="mainPopup">
-<h1>Hello extensionizr!</h1>
+  <h1>Color tab</h1>
 
-<button id="up" class="position">up</button>
-<button id="down" class="position">down</button>
+  <form id="faviform">
+    <div id="positions">
+      <p>Choose a position:</p>
+      <input type="radio" id="up" class="position-radio right top" name="position" value="up">
+      <input type="radio" id="down" class="position-radio right bottom" name="position" value="down">
+      <input type="radio" id="upleft" class="position-radio left top" name="position" value="upleft">
+      <input type="radio" id="left" class="position-radio left bottom" name="position" value="left">
+      <img src="icon48.png"></img>
+    </div>
 
-<button id="green" class="color">Set me green!</button>
-<button id="red" class="color">Set me red!</button>
+    <div id="colors">
+      <div id="red" class="color">
+        <input type="radio" name="color" value="red">
+      </div>
+      <div id="green" class="color">
+        <input type="radio" name="color" value="green">
+      </div>
+      <div id="blue" class="color">
+        <input type="radio" name="color" value="blue">
+      </div>
+      <div id="yellow" class="color">
+        <input type="radio" name="color" value="yellow">
+      </div>
+      <div id="orange" class="color">
+        <input type="radio" name="color" value="orange">
+      </div>
+      <div id="purple" class="color">
+        <input type="radio" name="color" value="purple">
+      </div>
+      <div id="gray" class="color">
+        <input type="radio" name="color" value="gray">
+      </div>
+    </div>
+
+    <div>
+      <button type="submit">Set tab</button>
+    </div>
+  </form>
 </div>
 <script type="text/javascript" src="popup.js"></script>
