@@ -1,33 +1,31 @@
-function hexToColor(hex) {
-    switch(hex) {
-    case "#FB635E": return "red";
-    case "#86E26D": return "green";
-    case "#53BDF6": return "blue";
-    case "#FDD74F": return "yellow";
-    case "#FCAB47": return "orange";
-    case "#D58FE3": return "purple";
-    case "#A5A5A7": return "gray";
+var popup = {
+    hexToColor: function(hex) {
+	switch(hex) {
+	case "#FB635E": return "red";
+	case "#86E26D": return "green";
+	case "#53BDF6": return "blue";
+	case "#FDD74F": return "yellow";
+	case "#FCAB47": return "orange";
+	case "#D58FE3": return "purple";
+	case "#A5A5A7": return "gray";
+	};
+    },
+
+    sendAction: function(request) {
+	chrome.extension.sendMessage(request, function(_response) {
+	    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+		var tab = tabs[0];
+
+		chrome.tabs.reload(tab.id);
+	    });
+	});
     }
-}
-
-function reloadCurrentTab() {
-    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-	var tab = tabs[0];
-
-	chrome.tabs.reload(tab.id);
-    });
-}
-
-function sendAction(request) {
-    chrome.extension.sendMessage(request, function(_response) {
-	reloadCurrentTab();
-    });
-}
+};
 
 document.getElementById("reset").addEventListener("click", function(event) {
     event.preventDefault();
 
-    sendAction({ action: "reset_data" });
+    popup.sendAction({ action: "reset_data" });
 });
 
 document.getElementById("faviform").addEventListener("submit", function(event) {
@@ -45,7 +43,7 @@ document.getElementById("faviform").addEventListener("submit", function(event) {
 	request["color"] = color.value;
     }
 
-    sendAction(request);
+    popup.sendAction(request);
 });
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -59,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	    }
 
 	    if (response.info.color) {
-	        var color = hexToColor(response.info.color);
+	        var color = popup.hexToColor(response.info.color);
 	        document.querySelector(`input[value='${color}']`).checked = true;
 	    }
 	});

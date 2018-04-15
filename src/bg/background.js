@@ -1,12 +1,13 @@
-function getData(tab, sendResponse) {
+var data = {
+  get: function(tab, sendResponse) {
     var key = tabKey(tab);
 
     chrome.storage.local.get(key, function(data) {
 	sendResponse({ info: data[key] });
     });
-}
+  },
 
-function setData(request, sendResponse) {
+  set: function(request, sendResponse) {
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
 	var key = tabKey(tabs[0]);
 
@@ -27,9 +28,9 @@ function setData(request, sendResponse) {
 
 	sendResponse({ info: "Values were set." });
     });
-}
+  },
 
-function resetData(request, sendResponse) {
+  reset: function(request, sendResponse) {
     chrome.tabs.query({ active: true, currentWindow: true}, function(tabs) {
 	var key = tabKey(tabs[0]);
 
@@ -37,6 +38,7 @@ function resetData(request, sendResponse) {
 
 	sendResponse({ info: "Values were reset." });
     });
+  }
 }
 
 /* Events */
@@ -46,13 +48,13 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     case "get_data":
 	var tab = sender.tab || request.tab;
 
-	getData(tab, sendResponse);
+        data.get(tab, sendResponse);
 	return true;
     case "reset_data":
-	resetData(request, sendResponse);
+        data.reset(request, sendResponse);
 	return true;
     case "set":
-	setData(request, sendResponse);
+        data.set(request, sendResponse);
 	return true;
     default:
 	return false;
