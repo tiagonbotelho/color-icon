@@ -29,12 +29,25 @@ function setData(request, sendResponse) {
     });
 }
 
+function resetData(request, sendResponse) {
+    chrome.tabs.query({ active: true, currentWindow: true}, function(tabs) {
+	var key = tabKey(tabs[0]);
+
+	chrome.storage.local.remove(key);
+
+	sendResponse({ info: "Values were reset." });
+    });
+}
+
 /* Events */
 
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     switch(request.action) {
     case "get_data":
 	getData(sender.tab, sendResponse);
+	return true;
+    case "reset_data":
+	resetData(request, sendResponse);
 	return true;
     case "set":
 	setData(request, sendResponse);
