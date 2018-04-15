@@ -44,7 +44,9 @@ function resetData(request, sendResponse) {
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     switch(request.action) {
     case "get_data":
-	getData(sender.tab, sendResponse);
+	var tab = sender.tab || request.tab;
+
+	getData(tab, sendResponse);
 	return true;
     case "reset_data":
 	resetData(request, sendResponse);
@@ -65,4 +67,3 @@ chrome.tabs.onUpdated.addListener(function(id, change, tab) {
 	chrome.storage.local.remove(tabKey(tab));
     }
 });
-

@@ -1,3 +1,15 @@
+function hexToColor(hex) {
+    switch(hex) {
+    case "#FB635E": return "red";
+    case "#86E26D": return "green";
+    case "#53BDF6": return "blue";
+    case "#FDD74F": return "yellow";
+    case "#FCAB47": return "orange";
+    case "#D58FE3": return "purple";
+    case "#A5A5A7": return "gray";
+    }
+}
+
 function reloadCurrentTab() {
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
 	var tab = tabs[0];
@@ -34,4 +46,22 @@ document.getElementById("faviform").addEventListener("submit", function(event) {
     }
 
     sendAction(request);
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+	var tab = tabs[0];
+	var request = { action: "get_data", tab: tab };
+
+	chrome.extension.sendMessage(request, function(response) {
+	    if (response.info.position) {
+		document.getElementById(response.info.position).checked = true;
+	    }
+
+	    if (response.info.color) {
+	        var color = hexToColor(response.info.color);
+	        document.querySelector(`input[value='${color}']`).checked = true;
+	    }
+	});
+    });
 });
