@@ -5,46 +5,53 @@
   <h1>Color tab</h1>
 
   <form id="faviform">
-    <div id="positions">
-      <p>Choose a position:</p>
-      <input type="radio" id="up" class="position-radio right top" name="position" value="up">
-      <input type="radio" id="down" class="position-radio right bottom" name="position" value="down">
-      <input type="radio" id="upleft" class="position-radio left top" name="position" value="upleft">
-      <input type="radio" id="left" class="position-radio left bottom" name="position" value="left">
-      <img src="icon48.png"></img>
+    <div id="options">
+      <div id="positions">
+        <p>1. position</p>
+        <input type="radio" id="up" class="position-radio right top" name="position" value="up">
+        <input type="radio" id="down" class="position-radio right bottom" name="position" value="down" checked="checked">
+        <input type="radio" id="upleft" class="position-radio left top" name="position" value="upleft">
+        <input type="radio" id="left" class="position-radio left bottom" name="position" value="left">
+        <img class="favicon-example" src="icon48.png"></img>
+      </div>
+
+      <div id="colors">
+        <p>2. color</p>
+        <div id="colors-1">
+          <div id="red" class="color">
+            <input type="radio" name="color" value="red">
+          </div>
+          <div id="green" class="color">
+            <input type="radio" name="color" value="green">
+          </div>
+          <div id="blue" class="color">
+            <input type="radio" name="color" value="blue">
+          </div>
+        </div>
+
+        <div id="colors-2">
+          <div id="yellow" class="color">
+            <input type="radio" name="color" value="yellow">
+          </div>
+          <div id="orange" class="color">
+            <input type="radio" name="color" value="orange">
+          </div>
+          <div id="purple" class="color">
+            <input type="radio" name="color" value="purple">
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div id="colors">
-      <div id="red" class="color">
-        <input type="radio" name="color" value="red">
+    <div class="button-actions">
+      <div class="submit">
+        <button type="submit">Set tab</button>
       </div>
-      <div id="green" class="color">
-        <input type="radio" name="color" value="green">
-      </div>
-      <div id="blue" class="color">
-        <input type="radio" name="color" value="blue">
-      </div>
-      <div id="yellow" class="color">
-        <input type="radio" name="color" value="yellow">
-      </div>
-      <div id="orange" class="color">
-        <input type="radio" name="color" value="orange">
-      </div>
-      <div id="purple" class="color">
-        <input type="radio" name="color" value="purple">
-      </div>
-      <div id="gray" class="color">
-        <input type="radio" name="color" value="gray">
-      </div>
-    </div>
 
-    <div>
-      <button type="submit">Set tab</button>
+      <div class="reset">
+        <button id="reset">Clear tab</button>
+      </div>
     </div>
   </form>
-
-  <div>
-    <button id="reset">Clear tab</button>
-  </div>
 </div>
 <script type="text/javascript" src="popup.js"></script>
