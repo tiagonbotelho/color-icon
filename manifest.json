@@ -34,7 +34,7 @@
         "<all_urls>"
       ],
       "js": [
-	"js/favico.js/favico-0.3.10.min.js",
+        "js/favico.js/favico-0.3.10.min.js",
         "src/inject/inject.js"
       ]
     }

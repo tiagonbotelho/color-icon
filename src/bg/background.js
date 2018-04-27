@@ -39,11 +39,14 @@ var data = {
 
     reset: function(request, sendResponse) {
         chrome.tabs.query({ active: true, currentWindow: true}, function(tabs) {
-            var key = tabKey(tabs[0]);
+            var current_tab = tabs[0];
+            var key = tabKey(current_tab);
 
             chrome.storage.local.remove(key);
 
-            sendResponse({ info: "Values were reset." });
+            chrome.tabs.sendMessage(current_tab.id, { info: "reset" }, function(_response) {
+                sendResponse({ info: "Values were reset." });
+            });
         });
     }
 }

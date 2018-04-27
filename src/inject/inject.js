@@ -32,6 +32,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         favicon.reset();
     }
 
+    if (request.info === "reset") {
+        return;
+    }
+
     if (info.color) {
         settings.bgColor = info.color;
     }
