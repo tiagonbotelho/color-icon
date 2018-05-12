@@ -1,10 +1,23 @@
 var data = {
-    get: function(tab, sendResponse) {
+    get: function(request, tab, sendResponse) {
         let key = tabKey(tab);
+        var holder = document.createElement("img");
 
-        chrome.storage.local.get(key, function(data) {
-            sendResponse({ info: data[key] });
+        holder.addEventListener("load", function(evt) {
+            var canvas = document.createElement("canvas");
+            canvas.width = holder.width;
+            canvas.height = holder.height;
+
+            var context = canvas.getContext("2d");
+            context.drawImage(holder, 0, 0);
+
+            chrome.storage.local.get(key, function(data) {
+                console.log(data[key]);
+                sendResponse({ info: data[key], faviconUrl: canvas.toDataURL() });
+            });
         });
+
+        holder.src = request.faviconUrl || tab.favIconUrl;
     },
 
     set: function(request, sendResponse) {
@@ -48,7 +61,7 @@ var data = {
                 sendResponse({ info: "Values were reset." });
             });
         });
-    }
+    },
 }
 
 /* Events */
@@ -58,7 +71,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
             case "get_data":
                 var tab = sender.tab || request.tab;
 
-                data.get(tab, sendResponse);
+                data.get(request, tab, sendResponse);
                 return true;
             case "reset_data":
                 data.reset(request, sendResponse);
