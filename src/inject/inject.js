@@ -17,7 +17,7 @@ chrome.extension.sendMessage({ action: "get_data" }, function(response) {
                 newFavicon.type = "image/x-icon";
                 newFavicon.href = response.faviconUrl;
 
-                for (i=0; i<links.length; i++) {
+                for (i = 0; i < links.length; i++) {
                     if (links[i].getAttribute("rel").match(/^(shortcut )?icon$/i)) {
                         document.head.removeChild(links[i]);
                     }
@@ -37,10 +37,9 @@ chrome.extension.sendMessage({ action: "get_data" }, function(response) {
 });
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    var faviconUrl;
     var info = request.info;
-    var settings = {
-        animation: 'none'
-    };
+    var settings = { animation: 'none' };
 
     if (favicon) {
         favicon.reset();
@@ -50,7 +49,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         return;
     }
 
-    var faviconUrl;
     var links = document.head.getElementsByTagName("link");
     for (i = 0; i < links.length; i++) {
         if (links[i].getAttribute("rel").match(/^(shortcut )?icon$/i)) {
@@ -59,40 +57,41 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
 
     chrome.extension.sendMessage({ action: "get_data", faviconUrl: faviconUrl }, function(response) {
-
-        if (response.info && response.faviconUrl) {
-            var newFavicon = document.createElement("link");
-            var links = document.head.getElementsByTagName("link");
-            var settings = {
-                animation: 'none',
-                bgColor: response.info.color
-            };
-
-            newFavicon.setAttribute("rel", "icon");
-            newFavicon.type = "image/x-icon";
-            newFavicon.href = response.faviconUrl;
-
-            for (i=0; i<links.length; i++) {
-                if (links[i].getAttribute("rel").match(/^(shortcut )?icon$/i)) {
-                    document.head.removeChild(links[i]);
-                }
-            }
-
-            document.head.appendChild(newFavicon);
-
-            if (response.info.color) {
-                settings.bgColor = info.color;
-            }
-
-            if (response.info.position) {
-                settings.position = info.position;
-            }
-
-            favicon = new Favico(settings);
-            favicon.badge(' ');
-
-            sendResponse({ farewell: "favicon set with success" });
+        if (!(response.info && response.faviconUrl)) {
+            sendResponse({ farewell: "something went wrong" });
         }
+
+        var newFavicon = document.createElement("link");
+        var links = document.head.getElementsByTagName("link");
+        var settings = {
+            animation: 'none',
+            bgColor: response.info.color
+        };
+
+        newFavicon.setAttribute("rel", "icon");
+        newFavicon.type = "image/x-icon";
+        newFavicon.href = response.faviconUrl;
+
+        for (i=0; i<links.length; i++) {
+            if (links[i].getAttribute("rel").match(/^(shortcut )?icon$/i)) {
+                document.head.removeChild(links[i]);
+            }
+        }
+
+        document.head.appendChild(newFavicon);
+
+        if (response.info.color) {
+            settings.bgColor = info.color;
+        }
+
+        if (response.info.position) {
+            settings.position = info.position;
+        }
+
+        favicon = new Favico(settings);
+        favicon.badge(' ');
+
+        sendResponse({ farewell: "favicon set with success" });
     });
 });
 

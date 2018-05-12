@@ -12,7 +12,6 @@ var data = {
             context.drawImage(holder, 0, 0);
 
             chrome.storage.local.get(key, function(data) {
-                console.log(data[key]);
                 sendResponse({ info: data[key], faviconUrl: canvas.toDataURL() });
             });
         });
@@ -61,11 +60,10 @@ var data = {
                 sendResponse({ info: "Values were reset." });
             });
         });
-    },
+    }
 }
 
 /* Events */
-
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
         switch(request.action) {
             case "get_data":
@@ -85,7 +83,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     }
 );
 
-chrome.tabs.onUpdated.addListener(function(id, change, tab) {
+chrome.tabs.onUpdated.addListener(function(_id, change, tab) {
     // If the url of the current tab changed
     //we need to invalidate our storage
     if (change.url) {
