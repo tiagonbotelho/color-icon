@@ -1,5 +1,14 @@
+body {
+  margin: 0;
+}
+
 h1 {
     font-size: 2em;
+    margin-top: 30px;
+}
+
+p {
+  margin-top: 0;
 }
 
 .color {
@@ -21,45 +30,57 @@ h1 {
 }
 
 .left {
-    margin-left: -25px;
+    margin-left: -30px;
 }
 
 .right {
-    margin-left: 25px;
+    margin-left: 30px;
 }
 
 .top {
-    margin-top: -5px;
+    margin-top: -20px;
 }
 
 .bottom {
-    margin-top: 40px;
+    margin-top: 45px;
 }
 
 .button-actions {
-  margin-top: 25px;
+  width: 100%;
+  margin-top: 35px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
 }
 
 .submit {
+  display: flex;
+  width: 100%;
   float: left;
 }
 
 .reset {
+  display: flex;
+  width: 100%;
   float: right;
 }
 
 .favicon-example {
-  width: 100%;
+  width: 69%;
+}
+
+.color-btn {
+  border: none;
+  border-top: 1px solid #F49143;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 #mainPopup {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
   width: 400px;
   font-family: Helvetica, Ubuntu, Arial, sans-serif;
 }
@@ -67,6 +88,9 @@ h1 {
 #faviform {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 10px;
 }
 
 #options {
@@ -96,6 +120,20 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+#submit-btn {
+  width: 100%;
+  border-left: 1px solid #F49143;
+  background: #F49143;
+  color: white;
+  font-size: 1.3em;
+}
+
+#reset {
+  width: 100%;
+  border-right: 1px solid #F49143;
+  font-size: 1.3em;
 }
 
 #red {
