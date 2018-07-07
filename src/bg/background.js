@@ -11,7 +11,7 @@ var data = {
             var context = canvas.getContext("2d");
             context.drawImage(holder, 0, 0);
 
-            chrome.storage.local.get(key, function(data) {
+            chrome.storage.sync.get(key, function(data) {
                 sendResponse({ info: data[key], faviconUrl: canvas.toDataURL() });
             });
         });
@@ -28,7 +28,7 @@ var data = {
                 request.color = colorToHex(request.color);
             }
 
-            chrome.storage.local.get(key, function(data) {
+            chrome.storage.sync.get(key, function(data) {
                 var obj = data || {};
                 obj[key] = obj[key] || {};
 
@@ -40,7 +40,7 @@ var data = {
                     obj[key].position = request.position;
                 }
 
-                chrome.storage.local.set(obj);
+                chrome.storage.sync.set(obj);
             });
 
             chrome.tabs.sendMessage(current_tab.id, { info: request }, function(_response) {
@@ -50,11 +50,11 @@ var data = {
     },
 
     reset: function(request, sendResponse) {
-        chrome.tabs.query({ active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
             var current_tab = tabs[0];
             var key = tabKey(current_tab);
 
-            chrome.storage.local.remove(key);
+            chrome.storage.sync.remove(key);
 
             chrome.tabs.sendMessage(current_tab.id, { info: "reset" }, function(_response) {
                 sendResponse({ info: "Values were reset." });
@@ -63,30 +63,49 @@ var data = {
     }
 }
 
-/* Events */
+/* Event handler */
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
-        switch(request.action) {
-            case "get_data":
-                var tab = sender.tab || request.tab;
+    switch(request.action) {
+        case "get_data":
+            var tab = sender.tab || request.tab;
 
-                data.get(request, tab, sendResponse);
-                return true;
-            case "reset_data":
-                data.reset(request, sendResponse);
-                return true;
-            case "set":
-                data.set(request, sendResponse);
-                return true;
-            default:
-                return false;
-        }
+            data.get(request, tab, sendResponse);
+            return true;
+        case "reset_data":
+            data.reset(request, sendResponse);
+            return true;
+        case "set":
+            data.set(request, sendResponse);
+            return true;
+        default:
+            return false;
     }
+}
 );
 
+// Whenever we update the tab with a url change we need to remove
+// the previous key
 chrome.tabs.onUpdated.addListener(function(_id, change, tab) {
-    // If the url of the current tab changed
-    //we need to invalidate our storage
-    if (change.url) {
-        chrome.storage.local.remove(tabKey(tab));
-    }
+    chrome.storage.sync.get(tabKey(tab), function(data) {
+        if (change.url && Object.keys(data).length === 0) {
+            chrome.storage.sync.remove(tabKey(tab));
+        }
+    });
+});
+
+// Since the key is based on the index of the tab we need to update the key
+// when we move the tab
+chrome.tabs.onMoved.addListener(function(id, info) {
+    chrome.tabs.get(id, function(tab) {
+        chrome.storage.sync.get(info.fromIndex.toString() + tab.url, function(data) {
+            if (Object.keys(data).length !== 0) {
+                let prev_key = info.fromIndex.toString() + tab.url;
+
+                data[tabKey(tab)] = data[prev_key];
+                delete data[prev_key];
+
+                chrome.storage.sync.set(data);
+            }
+        })
+    });
 });
