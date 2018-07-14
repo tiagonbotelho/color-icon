@@ -1,9 +1,9 @@
 {
-  "name": "Color Tabs",
+  "name": "Color Icon",
   "version": "0.0.1",
   "manifest_version": 2,
-  "description": "This extension was created with the awesome extensionizr.com",
-  "homepage_url": "http://extensionizr.com",
+  "description": "A Chrome Extension to differentiate tabs with the same Favicon",
+  "homepage_url": "https://github.com/tiagonbotelho/color-icon",
   "icons": {
     "16": "icons/16logo.png",
     "48": "icons/48logo.png",
