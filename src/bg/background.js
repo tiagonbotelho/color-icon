@@ -118,9 +118,6 @@ chrome.tabs.onRemoved.addListener(function(tabId, info) {
     var keyId = tabId.toString();
 
     chrome.storage.sync.get(keyId, function(data) {
-        console.log("REMOVING");
-        console.log(data[keyId]);
-        console.log(keyId);
         chrome.storage.sync.remove([data[keyId], keyId]);
     });
 })
