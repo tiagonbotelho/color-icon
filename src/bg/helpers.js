@@ -12,3 +12,7 @@ function colorToHex(color) {
 function tabKey(tab) {
     return tab.index.toString() + tab.url;
 }
+
+function tabId(tab) {
+    return tab.id.toString();
+}

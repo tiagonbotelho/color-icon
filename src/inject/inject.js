@@ -5,7 +5,7 @@ chrome.extension.sendMessage({ action: "get_data" }, function(response) {
         if (document.readyState === "complete") {
             clearInterval(readyStateCheckInterval);
 
-            if (response.info && response.faviconUrl) {
+            if (response && response.info && response.faviconUrl) {
                 var newFavicon = document.createElement("link");
                 var links = document.head.getElementsByTagName("link");
                 var settings = {
@@ -57,7 +57,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
 
     chrome.extension.sendMessage({ action: "get_data", faviconUrl: faviconUrl }, function(response) {
-        if (!(response.info && response.faviconUrl)) {
+        if (!(response && response.info && response.faviconUrl)) {
             sendResponse({ farewell: "something went wrong" });
         }
 

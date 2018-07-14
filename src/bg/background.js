@@ -23,6 +23,7 @@ var data = {
         chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
             var current_tab = tabs[0];
             var key = tabKey(current_tab);
+            var key_id = tabId(current_tab);
 
             if (request.color) {
                 request.color = colorToHex(request.color);
@@ -31,6 +32,7 @@ var data = {
             chrome.storage.sync.get(key, function(data) {
                 var obj = data || {};
                 obj[key] = obj[key] || {};
+                obj[key_id] = key;
 
                 if (request.color) {
                     obj[key].color = request.color;
@@ -88,7 +90,7 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 chrome.tabs.onUpdated.addListener(function(_id, change, tab) {
     chrome.storage.sync.get(tabKey(tab), function(data) {
         if (change.url && Object.keys(data).length === 0) {
-            chrome.storage.sync.remove(tabKey(tab));
+            chrome.storage.sync.remove([tabId(tab), tabKey(tab)]);
         }
     });
 });
@@ -101,11 +103,24 @@ chrome.tabs.onMoved.addListener(function(id, info) {
             if (Object.keys(data).length !== 0) {
                 let prev_key = info.fromIndex.toString() + tab.url;
 
+                data[tabId(tab)] = tabKey(tab);
                 data[tabKey(tab)] = data[prev_key];
-                delete data[prev_key];
 
+                chrome.storage.sync.remove(prev_key);
                 chrome.storage.sync.set(data);
             }
         })
     });
 });
+
+// When a tab is closed we need to clean up every data we have on it
+chrome.tabs.onRemoved.addListener(function(tabId, info) {
+    var keyId = tabId.toString();
+
+    chrome.storage.sync.get(keyId, function(data) {
+        console.log("REMOVING");
+        console.log(data[keyId]);
+        console.log(keyId);
+        chrome.storage.sync.remove([data[keyId], keyId]);
+    });
+})
