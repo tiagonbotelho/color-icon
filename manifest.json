@@ -5,9 +5,9 @@
   "description": "This extension was created with the awesome extensionizr.com",
   "homepage_url": "http://extensionizr.com",
   "icons": {
-    "16": "icons/coloricon16.png",
-    "48": "icons/coloricon48.png",
-    "128": "icons/coloricon128.png"
+    "16": "icons/16logo.png",
+    "48": "icons/48logo.png",
+    "128": "icons/128logo.png"
   },
   "default_locale": "en",
   "background": {
@@ -18,8 +18,8 @@
     "persistent": false
   },
   "browser_action": {
-    "default_icon": "icons/coloricon19.png",
-    "default_title": "browser action demo",
+    "default_icon": "icons/19logo.png",
+    "default_title": "Color Icon",
     "default_popup": "src/browser_action/browser_action.html"
   },
   "permissions": [

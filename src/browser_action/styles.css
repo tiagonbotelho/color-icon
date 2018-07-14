@@ -2,19 +2,21 @@ body {
 	margin: 0;
 	background-color: #F2F3EF;
 	border-radius: 5px;
+	font-weight: 400;
 }
 
 h1 {
 	font-size: 2em;
 	margin-top: 15px;
 	font-variant: small-caps;
-	color: #FCAB47;
+	font-weight: 400;
+	color: #EF9255;
 }
 
 p {
 	margin-top: 0;
 	font-variant: small-caps;
-	font-weight: 800;
+	font-weight: 400;
 	font-size: 1.2em;
 }
 
@@ -75,55 +77,55 @@ button {
 	content: '';
 	display: inline-block;
 	visibility: visible;
-	border: 2px solid black;
-}
-
-#red:after {
-	background-color: #FB635E;
-}
-
-#red:checked:after {
-	background-color: #FB635E;
+	border: 1px solid black;
 }
 
 #green:after {
-	background-color: #86E26D;
+	background-color: #B5DC73;
 }
 
 #green:checked:after {
-	background-color: #86E26D;
+	background-color: #B5DC73;
 }
 
 #blue:after {
-	background-color: #53BDF6;
+	background-color: #81C6C6;
 }
 
 #blue:checked:after {
-	background-color: #53BDF6;
+	background-color: #81C6C6;
 }
 
 #yellow:after {
-	background-color: #FDD74F;
+	background-color: #FFCD6F;
 }
 
 #yellow:checked:after {
-	background-color: #FDD74F;
+	background-color: #FFCD6F;
 }
 
 #orange:after {
-	background-color: #FCAB47;
+	background-color: #EF9255;
 }
 
 #orange:checked:after {
-	background-color: #FCAB47;
+	background-color: #EF9255;
+}
+
+#pink:after {
+	background-color: #D37E8B;
+}
+
+#pink:checked:after {
+	background-color: #D37E8B;
 }
 
 #purple:after {
-	background-color: #D58FE3;
+	background-color: #895374;
 }
 
 #purple:checked:after {
-	background-color: #D58FE3;
+	background-color: #895374;
 }
 
 .color-radio {
@@ -136,19 +138,19 @@ button {
 }
 
 .left {
-	margin-left: -30px;
+	margin-left: -27px;
 }
 
 .right {
-	margin-left: 30px;
+	margin-left: 25px;
 }
 
 .top {
-	margin-top: -50px;
+	margin-top: -40px;
 }
 
 .bottom {
-	margin-top: 10px;
+	margin-top: 5px;
 }
 
 .button-actions {
@@ -182,7 +184,7 @@ button {
 	background-color: #F2F3EF;
 	padding-top: 10px;
 	padding-bottom: 10px;
-	font-weight: 600;
+	font-weight: 400;
 	font-variant: small-caps;
 	font-size: 1.3em;
 }
@@ -253,7 +255,7 @@ button {
 
 #submit-btn {
 	width: 100%;
-	background: #F49143;
+	background: #EF9255;
 	font-size: 1.3em;
 	border-radius: 5px;
 }
@@ -271,52 +273,4 @@ button {
 
 #reset:active {
 	font-size: 1.2em;
-}
-
-#red:after {
-	background-color: #FB635E;
-}
-
-#red:checked:after {
-	background-color: #FB635E;
-}
-
-#green:after {
-	background-color: #86E26D;
-}
-
-#green:checked:after {
-	background-color: #86E26D;
-}
-
-#blue:after {
-	background-color: #53BDF6;
-}
-
-#blue:checked:after {
-	background-color: #53BDF6;
-}
-
-#yellow:after {
-	background-color: #FDD74F;
-}
-
-#yellow:checked:after {
-	background-color: #FDD74F;
-}
-
-#orange:after {
-	background-color: #FCAB47;
-}
-
-#orange:checked:after {
-	background-color: #FCAB47;
-}
-
-#purple:after {
-	background-color: #D58FE3;
-}
-
-#purple:checked:after {
-	background-color: #D58FE3;
 }
