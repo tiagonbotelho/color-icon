@@ -14,7 +14,7 @@ The extension was made available in the Google Chrome Web Store [here](http://go
 
 In order to be able to develop for this extension you will need the following steps:
 
-1. Clone the repository to a directory of your choosing;
+1. Clone the repository to a directory of your choosing with `git clone --recursive https://github.com/tiagonbotelho/color-icon.git`;
 2. Head to Google Chrome > Options > More Tools > Extensions;
 3. Click on the top right corner to enable "Developer Mode";
 4. Click "Load Unpacked" and load the Color icon folder;
