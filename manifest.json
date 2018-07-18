@@ -1,6 +1,7 @@
 {
   "name": "Color Icon",
-  "version": "0.0.1",
+  "version": "0.1",
+  "author": "Tiago Botelho",
   "manifest_version": 2,
   "description": "A Chrome Extension to differentiate tabs with the same Favicon",
   "homepage_url": "https://github.com/tiagonbotelho/color-icon",
