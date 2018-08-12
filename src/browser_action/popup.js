@@ -1,12 +1,12 @@
 var popup = {
     hexToColor: function(hex) {
         switch(hex) {
-            case "#FB635E": return "red";
-            case "#86E26D": return "green";
-            case "#53BDF6": return "blue";
-            case "#FDD74F": return "yellow";
-            case "#FCAB47": return "orange";
-            case "#D58FE3": return "purple";
+            case "#D37E8B": return "pink";
+            case "#B5DC73": return "green";
+            case "#81C6C6": return "blue";
+            case "#FFCD6F": return "yellow";
+            case "#F5903F": return "orange";
+            case "#895374": return "purple";
         };
     },
 
