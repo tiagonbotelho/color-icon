@@ -30,4 +30,4 @@ Favicon manipulation was made possible thanks to [Favico.js](https://github.com/
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+The extension is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
