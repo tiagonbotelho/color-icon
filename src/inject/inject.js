@@ -1,6 +1,6 @@
-var favicon;
+var colorIconFavicon;
 
-chrome.extension.sendMessage({ action: "get_data" }, function(response) {
+chrome.extension.sendMessage({ action: "get" }, function(response) {
     var readyStateCheckInterval = setInterval(function() {
         if (document.readyState === "complete") {
             clearInterval(readyStateCheckInterval);
@@ -18,7 +18,9 @@ chrome.extension.sendMessage({ action: "get_data" }, function(response) {
                 newFavicon.href = response.faviconUrl;
 
                 for (i = 0; i < links.length; i++) {
-                    if (links[i].getAttribute("rel").match(/^(shortcut )?icon$/i)) {
+                    rel = links[i].getAttribute("rel");
+
+                    if (rel && rel.match(/^(shortcut )?icon$/i)) {
                         document.head.removeChild(links[i]);
                     }
                 }
@@ -29,8 +31,8 @@ chrome.extension.sendMessage({ action: "get_data" }, function(response) {
                     settings.position = response.info.position;
                 }
 
-                favicon = new Favico(settings);
-                favicon.badge(' ');
+                colorIconFavicon = new Favico(settings);
+                colorIconFavicon.badge(' ');
             }
         }
     }, 10);
@@ -41,8 +43,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     var info = request.info;
     var settings = { animation: 'none' };
 
-    if (favicon) {
-        favicon.reset();
+    if (colorIconFavicon) {
+        colorIconFavicon.reset();
     }
 
     if (request.info === "reset") {
@@ -51,12 +53,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 
     var links = document.head.getElementsByTagName("link");
     for (i = 0; i < links.length; i++) {
-        if (links[i].getAttribute("rel").match(/^(shortcut )?icon$/i)) {
+        rel = links[i].getAttribute("rel");
+
+        if (rel && rel.match(/^(shortcut )?icon$/i)) {
             faviconUrl = links[i].href;
         }
     }
 
-    chrome.extension.sendMessage({ action: "get_data", faviconUrl: faviconUrl }, function(response) {
+    chrome.extension.sendMessage({ action: "get", faviconUrl: faviconUrl }, function(response) {
         if (!(response && response.info && response.faviconUrl)) {
             sendResponse({ farewell: "something went wrong" });
         }
@@ -72,8 +76,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         newFavicon.type = "image/x-icon";
         newFavicon.href = response.faviconUrl;
 
-        for (i=0; i<links.length; i++) {
-            if (links[i].getAttribute("rel").match(/^(shortcut )?icon$/i)) {
+        for (i = 0; i < links.length; i++) {
+            rel = links[i].getAttribute("rel");
+
+            if (rel && rel.match(/^(shortcut )?icon$/i)) {
                 document.head.removeChild(links[i]);
             }
         }
@@ -88,15 +94,15 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             settings.position = info.position;
         }
 
-        favicon = new Favico(settings);
-        favicon.badge(' ');
+        colorIconFavicon = new Favico(settings);
+        colorIconFavicon.badge(' ');
 
         sendResponse({ farewell: "favicon set with success" });
     });
 });
 
 window.onbeforeunload = function(e) {
-    if (favicon) {
-        favicon.reset();
+    if (colorIconFavicon) {
+        colorIconFavicon.reset();
     }
 }

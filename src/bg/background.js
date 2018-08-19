@@ -21,9 +21,9 @@ var data = {
 
     set: function(request, sendResponse) {
         chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-            var current_tab = tabs[0];
-            var key = tabKey(current_tab);
-            var key_id = tabId(current_tab);
+            var currentTab = tabs[0];
+            var key = tabKey(currentTab);
+            var keyId = tabId(currentTab);
 
             if (request.color) {
                 request.color = colorToHex(request.color);
@@ -32,7 +32,7 @@ var data = {
             chrome.storage.sync.get(key, function(data) {
                 var obj = data || {};
                 obj[key] = obj[key] || {};
-                obj[key_id] = key;
+                obj[keyId] = key;
 
                 if (request.color) {
                     obj[key].color = request.color;
@@ -45,7 +45,7 @@ var data = {
                 chrome.storage.sync.set(obj);
             });
 
-            chrome.tabs.sendMessage(current_tab.id, { info: request }, function(_response) {
+            chrome.tabs.sendMessage(currentTab.id, { info: request }, function(_response) {
                 sendResponse({ info: "Values were set." });
             });
         });
@@ -53,27 +53,27 @@ var data = {
 
     reset: function(request, sendResponse) {
         chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-            var current_tab = tabs[0];
-            var key = tabKey(current_tab);
+            var currentTab = tabs[0];
+            var key = tabKey(currentTab);
 
             chrome.storage.sync.remove(key);
 
-            chrome.tabs.sendMessage(current_tab.id, { info: "reset" }, function(_response) {
+            chrome.tabs.sendMessage(currentTab.id, { info: "reset" }, function(_response) {
                 sendResponse({ info: "Values were reset." });
             });
         });
-    }
+    },
 }
 
 /* Event handler */
 chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
     switch(request.action) {
-        case "get_data":
+        case "get":
             var tab = sender.tab || request.tab;
 
             data.get(request, tab, sendResponse);
             return true;
-        case "reset_data":
+        case "reset":
             data.reset(request, sendResponse);
             return true;
         case "set":
@@ -101,12 +101,12 @@ chrome.tabs.onMoved.addListener(function(id, info) {
     chrome.tabs.get(id, function(tab) {
         chrome.storage.sync.get(info.fromIndex.toString() + tab.url, function(data) {
             if (Object.keys(data).length !== 0) {
-                let prev_key = info.fromIndex.toString() + tab.url;
+                let prevKey = info.fromIndex.toString() + tab.url;
 
                 data[tabId(tab)] = tabKey(tab);
-                data[tabKey(tab)] = data[prev_key];
+                data[tabKey(tab)] = data[prevKey];
 
-                chrome.storage.sync.remove(prev_key);
+                chrome.storage.sync.remove(prevKey);
                 chrome.storage.sync.set(data);
             }
         })
@@ -121,3 +121,16 @@ chrome.tabs.onRemoved.addListener(function(tabId, info) {
         chrome.storage.sync.remove([data[keyId], keyId]);
     });
 })
+
+// Whenever the extension gets installed/updated we need to reload every tab in the window
+chrome.runtime.onInstalled.addListener(function() {
+    reloadMessage = "In order to use Color Icon you must first reload every open tab. \n\n Do you with to do it now?"
+
+    if (confirm(reloadMessage)) {
+        chrome.tabs.getAllInWindow(null, function(tabs) {
+            for(i = 0; i < tabs.length; i++) {
+                chrome.tabs.update(tabs[i].id, { url: tabs[i].url });
+            }
+        });
+    }
+});

@@ -19,7 +19,7 @@ var popup = {
 document.getElementById("reset").addEventListener("click", function(event) {
     event.preventDefault();
 
-    popup.sendAction({ action: "reset_data" });
+    popup.sendAction({ action: "reset" });
 });
 
 document.getElementById("faviform").addEventListener("submit", function(event) {
@@ -43,7 +43,7 @@ document.getElementById("faviform").addEventListener("submit", function(event) {
 document.addEventListener("DOMContentLoaded", function() {
     chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
         var tab = tabs[0];
-        var request = { action: "get_data", tab: tab };
+        var request = { action: "get", tab: tab };
 
         chrome.extension.sendMessage(request, function(response) {
             if (response.info.position) {
