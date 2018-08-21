@@ -4,11 +4,11 @@
 Color Icon is an extension available for Google Chrome that enables the user to distinguish tabs 
 with the same favicon by marking them with a color of your choice.
 
-![screenshot](https://github.com/tiagonbotelho/color-icon/blob/master/img/main.png?raw=true)
+![screenshot](img/main.png?raw=true)
 
 ## Installation
 
-The extension was made available in the Google Chrome Web Store [here](http://google.com)
+The extension was made available in the Google Chrome Web Store [here](https://chrome.google.com/webstore/detail/color-icon/bfmebkjjepnclncmndhcgcmmmchijbop)
 
 ## Development
 
@@ -21,7 +21,7 @@ In order to be able to develop for this extension you will need the following st
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/tiagonbotelho/color-icon. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/tiagonbotelho/color-icon. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](https://www.contributor-covenant.org/) code of conduct.
 
 
 ## Credits
