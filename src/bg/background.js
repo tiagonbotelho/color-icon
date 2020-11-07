@@ -129,7 +129,7 @@ chrome.runtime.onInstalled.addListener(function() {
     if (confirm(reloadMessage)) {
         chrome.tabs.getAllInWindow(null, function(tabs) {
             for(i = 0; i < tabs.length; i++) {
-                chrome.tabs.update(tabs[i].id, { url: tabs[i].url });
+                chrome.tabs.reload(tabs[i].id);
             }
         });
     }

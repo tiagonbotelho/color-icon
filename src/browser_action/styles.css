@@ -138,19 +138,19 @@ button {
 }
 
 .left {
-	margin-left: -27px;
+	margin-left: -50px;
 }
 
 .right {
-	margin-left: 25px;
+	margin-left: 50px;
 }
 
 .top {
-	margin-top: -40px;
+	margin-top: -85px;
 }
 
 .bottom {
-	margin-top: 5px;
+	margin-top: 10px;
 }
 
 .button-actions {
